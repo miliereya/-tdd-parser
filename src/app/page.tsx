@@ -10,17 +10,6 @@ export default function Home() {
 	const [pres, setPres] = useState<any>([])
 
 	/* Fetch and update the state once */
-	useEffect(() => {
-		;(async () => {
-			const f = await (
-				await fetch('https://sheetjs.com/pres.xlsx')
-			).arrayBuffer()
-			const wb = read(f) // parse the array buffer
-			const ws = wb.Sheets[wb.SheetNames[0]] // get the first worksheet
-			const data = utils.sheet_to_json(ws) // generate objects
-			setPres(data) // update state
-		})()
-	}, [])
 
 	/* get state data and export to XLSX */
 	const exportFile = useCallback(() => {

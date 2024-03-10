@@ -1,14 +1,33 @@
 import { DATA_INPUT_LIST } from '@/constants/input.constants'
 import { Input } from '../input'
 import s from './converter.module.scss'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { dataApi } from '@/api/data.api'
+import { read, utils, writeFileXLSX } from 'xlsx'
 
 export const Converter = () => {
 	const [key, setKey] = useState(0)
+	const [pres, setPres] = useState<any>([])
+
+	/* Fetch and update the state once */
+	useEffect(() => {
+		;(async () => {
+			const f = await (await fetch('/template.xlsx')).arrayBuffer()
+			const wb = read(f) // parse the array buffer
+			const ws = wb.Sheets[wb.SheetNames[0]] // get the first worksheet
+			const data = utils.sheet_to_json(ws) // generate objects
+			setPres(data) // update state
+			console.log(data)
+		})()
+	}, [])
 
 	const convertHandler = async () => {
 		const dataList = DATA_INPUT_LIST
+
+		const ws = utils.json_to_sheet(pres)
+		const wb = utils.book_new()
+		utils.book_append_sheet(wb, ws)
+		writeFileXLSX(wb, 'title.xlsx')
 
 		await dataApi.createMany(
 			dataList
