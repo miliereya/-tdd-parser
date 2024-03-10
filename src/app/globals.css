@@ -1,1 +1,11 @@
 @import url('./reset.css');
+
+body {
+	background-color: #faf5f5;
+}
+
+.layout {
+	display: flex;
+	height: 100vh;
+	margin: 0 3px;
+}

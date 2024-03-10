@@ -1,6 +1,8 @@
 'use client'
-import { Input } from '@/components/input'
-import { INPUT_LIST } from '@/constants/input.constants'
+
+import { Converter } from '@/components/converter'
+import { ROUTER_CONSTANTS } from '@/constants/router.constants'
+import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 import { read, utils, writeFileXLSX } from 'xlsx'
 
@@ -22,7 +24,6 @@ export default function Home() {
 
 	/* get state data and export to XLSX */
 	const exportFile = useCallback(() => {
-		console.log(pres)
 		const ws = utils.json_to_sheet(pres)
 		const wb = utils.book_new()
 		utils.book_append_sheet(wb, ws, 'Data')
@@ -30,11 +31,8 @@ export default function Home() {
 	}, [pres])
 
 	return (
-		<div>
-			{INPUT_LIST.map((input, index) => {
-				return <Input key={index} index={index} title={input.title} />
-			})}
-			{/* <button onClick={exportFile}>Export XLSX</button> */}
-		</div>
+		<>
+			<Converter />
+		</>
 	)
 }
