@@ -40,7 +40,6 @@ interface ResultProps {
 }
 
 const Result = ({ r, table, matchers }: ResultProps) => {
-	const [objR, setObjR] = useState(r)
 	const [objA, setObjA] = useState(Object.entries(r.data))
 
 	const _id = r._id
@@ -88,6 +87,48 @@ const Result = ({ r, table, matchers }: ResultProps) => {
 
 	return (
 		<div key={r._id} className={s.data_wrapper}>
+			<table>
+				<tbody>
+					{objA.map((field, index) => {
+						const key = field[0]
+						const value = field[1]
+
+						if (key === '_id' || key === 'parentField') return
+
+						return (
+							<tr key={key}>
+								<td className={s.input_key}>
+									<input
+										defaultValue={key}
+										type='text'
+										onChange={(e) =>
+											changeValueHandler(true, index, e.target.value)
+										}
+									/>
+								</td>
+
+								<td className={s.input_value}>
+									<input
+										defaultValue={value}
+										type='text'
+										onChange={(e) =>
+											changeValueHandler(false, index, e.target.value)
+										}
+										style={{
+											background: matchers.some((matcher) =>
+												matcher.test(value)
+											)
+												? '#0f0'
+												: 'none',
+											width: '100%',
+										}}
+									/>
+								</td>
+							</tr>
+						)
+					})}
+				</tbody>
+			</table>
 			<table className={s.table}>
 				<tbody>
 					{objA.map((field, index) => {

@@ -48,6 +48,7 @@ export const Input = ({
 		setValue(res)
 		refresh()
 	}
+	console.log(index)
 
 	return (
 		<label className={s.label} htmlFor={title}>
@@ -59,6 +60,16 @@ export const Input = ({
 				value={value ?? ''}
 				onChange={(e) => setValue(e.target.value)}
 				id={index}
+				style={
+					title === 'Пункт навантаження' ||
+					title === 'Пункт розвантаження' ||
+					title === 'Замовник' ||
+					title === 'Перевізник' ||
+					title === 'Вантажовідправник' ||
+					title === 'Вантажоодержувач'
+						? { width: '1200px' }
+						: {}
+				}
 			/>
 			{isFocused && results.length !== 0 && (
 				<div className={s.results}>
