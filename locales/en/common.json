@@ -1,0 +1,15 @@
+{   "converter":"Converter",
+    "nav":{
+        "cars":"Cars",
+        "trailers":"Trailers",
+        "drivers":"Drivers",
+        "customers":"Clients",
+        "carriers":"Carriers",
+        "consignors":"Shippers",
+        "consignees":"Consignees"
+
+
+    }
+}
+
+
