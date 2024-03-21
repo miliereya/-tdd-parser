@@ -18,6 +18,7 @@ export const Converter = () => {
 				const file = await (await fetch('/template_1.xlsx')).arrayBuffer()
 				await wb.xlsx.load(file) // load our template to our instance.
 				setPres(wb) // set instance to state // we can use ref
+				console.log(wb)
 			} catch (error) {
 				console.log(error)
 			}
