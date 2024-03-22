@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import { Nav } from '@/components/nav'
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
+import '@/assets/styles/globals.css'
 import initTranslations from '../18n'
 import TranslationsProvider from '@/components/TranslationProvider'
 import { dir } from 'i18next'
-
-const inter = Inter({ subsets: ['latin'] })
+import { ThemeProvider } from '@mui/material'
+import { theme } from '@/config/theme'
 
 const i18nNameSpaces = ['common']
 
@@ -26,17 +25,18 @@ export default async function RootLayout({
 
 	return (
 		<html lang={locale} dir={dir(locale)}>
-			<body className={inter.className}>
-				<TranslationsProvider
-					resources={resources}
-					locale={locale}
-					namespaces={i18nNameSpaces}
-				>
-					<div className='layout'>
-						<Nav />
-						{children}
-					</div>
-				</TranslationsProvider>
+			<body>
+				<AppRouterCacheProvider>
+					<ThemeProvider theme={theme}>
+						<TranslationsProvider
+							resources={resources}
+							locale={locale}
+							namespaces={i18nNameSpaces}
+						>
+							{children}
+						</TranslationsProvider>
+					</ThemeProvider>
+				</AppRouterCacheProvider>
 			</body>
 		</html>
 	)
