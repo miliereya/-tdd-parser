@@ -1,4 +1,4 @@
-import { IGroup } from '@/types/input.types'
+import { IGroup } from '@/shared/types/template.types'
 import {
 	FormControl,
 	InputLabel,

@@ -1,4 +1,4 @@
-import { SERVER_URL } from '@/constants/api.constants'
+import { SERVER_URL } from '@/shared/constants/api.constants'
 import { getAuthToken, setAuthToken } from '@/lib/actions'
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 

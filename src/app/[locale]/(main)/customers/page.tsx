@@ -1,4 +1,4 @@
-import { dataApi } from '@/api/data.api'
+import { dataApi } from '@/shared/api/data/data.api'
 import { SearchPage } from '@/components/search-page'
 
 export default async function Customers() {

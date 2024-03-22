@@ -1,4 +1,4 @@
-import { IRouterLink } from '@/types/router.types'
+import { IRouterLink } from '@/shared/types/router.types'
 
 export const ROUTER_CONSTANTS: IRouterLink[] = [
 	{ path: 'cars', title: 'Автомобілі' },

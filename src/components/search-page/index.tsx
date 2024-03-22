@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { SearchResults } from '../search-results'
 import s from './search-page.module.scss'
-import { dataApi } from '@/api/data.api'
-import { IData, TypeTable } from '@/types/data.types'
+import { dataApi } from '@/shared/api/data/data.api'
+import { IData, TypeTable } from '@/shared/types/api/data.types'
 
 interface SearchPageProps {
 	title: string

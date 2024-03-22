@@ -1,10 +1,10 @@
 'use client'
 
-import { DATA_INPUT_LIST } from '@/constants/input.constants'
+import { DATA_INPUT_LIST } from '@/shared/constants/input.constants'
 import { Input } from '../input'
 import s from './converter.module.scss'
 import { useEffect, useState } from 'react'
-import { dataApi } from '@/api/data.api'
+import { dataApi } from '@/shared/api'
 import { Workbook } from 'exceljs'
 import { saveAs } from 'file-saver'
 

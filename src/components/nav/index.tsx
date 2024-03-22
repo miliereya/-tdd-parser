@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from 'react-i18next'
-import { ROUTER_CONSTANTS } from '@/constants/router.constants'
+import { ROUTER_CONSTANTS } from '@/shared/constants/router.constants'
 import s from './nav.module.scss'
 import Link from 'next/link'
 

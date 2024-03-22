@@ -1,4 +1,4 @@
-import { IField, IGroup } from '@/types/input.types'
+import { IField, IGroup } from '@/shared/types/template.types'
 import { v4 as uuidv4 } from 'uuid'
 import {
 	Button,

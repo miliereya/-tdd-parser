@@ -1,20 +1,11 @@
-export type TypeTable =
-	| 'cars'
-	| 'trailers'
-	| 'customers'
-	| 'carriers'
-	| 'drivers'
-	| 'consignors'
-	| 'consignees'
+interface ITableBase {
+	table: string
+}
 
 export interface IData {
 	_id: string
 	parentField: string
 	data: object
-}
-
-interface ITableBase {
-	table: TypeTable
 }
 
 export interface ICreateData extends ITableBase {

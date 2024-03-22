@@ -5,8 +5,8 @@ import {
 	IFullSearchData,
 	ISearchData,
 	IUpdateData,
-} from '@/types/data.types'
-import { api } from '.'
+} from '@/shared/types'
+import { api } from './instance'
 
 const dataUrl = 'data'
 

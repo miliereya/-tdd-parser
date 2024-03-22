@@ -1,4 +1,4 @@
-import { TypeTable } from '@/types/data.types'
+import { TypeTable } from '@/shared/types/api/data.types'
 
 interface IData_Input {
 	parentField: string

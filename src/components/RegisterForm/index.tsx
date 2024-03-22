@@ -1,6 +1,5 @@
 'use client'
 
-import { api } from '@/api'
 import {
 	Box,
 	Button,
@@ -19,7 +18,6 @@ export const RegisterForm = () => {
 	const handleSubmit = async () => {
 		try {
 			setIsLoading(true)
-			api.post('user/register', { email })
 		} catch (error) {
 			console.log(error)
 		} finally {

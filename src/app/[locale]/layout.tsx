@@ -6,6 +6,7 @@ import TranslationsProvider from '@/components/TranslationProvider'
 import { dir } from 'i18next'
 import { ThemeProvider } from '@mui/material'
 import { theme } from '@/config/theme'
+import { AppProvider } from '@/providers'
 
 const i18nNameSpaces = ['common']
 
@@ -26,17 +27,15 @@ export default async function RootLayout({
 	return (
 		<html lang={locale} dir={dir(locale)}>
 			<body>
-				<AppRouterCacheProvider>
-					<ThemeProvider theme={theme}>
-						<TranslationsProvider
-							resources={resources}
-							locale={locale}
-							namespaces={i18nNameSpaces}
-						>
-							{children}
-						</TranslationsProvider>
-					</ThemeProvider>
-				</AppRouterCacheProvider>
+				<AppProvider>
+					<TranslationsProvider
+						resources={resources}
+						locale={locale}
+						namespaces={i18nNameSpaces}
+					>
+						{children}
+					</TranslationsProvider>
+				</AppProvider>
 			</body>
 		</html>
 	)

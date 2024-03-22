@@ -1,6 +1,6 @@
-import { IData, TypeTable } from '@/types/data.types'
+import { IData, TypeTable } from '@/shared/types/api/data.types'
 import s from './search-results.module.scss'
-import { dataApi } from '@/api/data.api'
+import { dataApi } from '@/shared/api/data/data.api'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'

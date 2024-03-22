@@ -1,13 +1,13 @@
-import { IData, TypeTable } from '@/types/data.types'
+import { IData } from '@/shared/types/api/data.types'
 import s from './input.module.scss'
-import { useLocalStorageState } from '@/hooks/useLocalStorageState'
+import { useLocalStorageState } from '@/shared/hooks/useLocalStorageState'
 import { useEffect, useState } from 'react'
-import { dataApi } from '@/api/data.api'
+import { dataApi } from '@/shared/api'
 
 interface InputProps {
 	index: string
 	title?: string
-	table?: TypeTable
+	table?: string
 	isParentField?: boolean
 	parentField?: string
 	refresh?: () => void

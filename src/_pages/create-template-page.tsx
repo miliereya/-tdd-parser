@@ -2,10 +2,11 @@
 
 import { InputGroup } from '@/components/createTemplate/InputGroup'
 import { Cell } from '@/components/createTemplate/Cell'
-import { IField, IGroup } from '@/types/input.types'
+import { IField, IGroup } from '@/shared/types/template.types'
 import { Box, Button, Stack, TextField } from '@mui/material'
 import { Workbook } from 'exceljs'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { userApi } from '@/shared/api'
 
 export const CreateTemplatePage = () => {
 	const [pres, setPres] = useState<null | Workbook>(null)
@@ -16,6 +17,13 @@ export const CreateTemplatePage = () => {
 	const [groupParentField, setGroupParentField] = useState('')
 
 	const [cells, setCells] = useState<string[]>([])
+
+	useEffect(() => {
+		const register = async () => {
+			console.log(await userApi.register({ email: 'qw' }))
+		}
+		register()
+	}, [])
 
 	const loadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
 		try {

@@ -1,4 +1,4 @@
-import { ICellValue, IGroup } from '@/types/input.types'
+import { ICellValue, IGroup } from '@/shared/types/template.types'
 import {
 	Button,
 	Input,
