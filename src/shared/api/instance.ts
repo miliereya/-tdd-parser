@@ -4,13 +4,14 @@ import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 export const api = axios.create({
 	baseURL: typeof window === 'undefined' ? SERVER_URL : 'api',
+	withCredentials: true,
 })
 
-axios.interceptors.request.use(
+api.interceptors.request.use(
 	async (
 		config: InternalAxiosRequestConfig
 	): Promise<InternalAxiosRequestConfig> => {
-		const token = getAuthToken()
+		const token = await getAuthToken()
 		if (config.headers && token) {
 			config.headers.token = token
 		}
@@ -21,11 +22,11 @@ axios.interceptors.request.use(
 const onFulfilledResponse = async (
 	response: AxiosResponse<{ token?: string }>
 ): Promise<AxiosResponse> => {
-	if (response.data && response.data.token) {
-		await setAuthToken(response.data.token)
+	if (response.headers && response.headers.token) {
+		await setAuthToken(response.headers.token)
 	}
 
 	return response
 }
 
-axios.interceptors.response.use(onFulfilledResponse)
+api.interceptors.response.use(onFulfilledResponse)

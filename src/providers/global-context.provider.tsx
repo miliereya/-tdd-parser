@@ -1,16 +1,29 @@
 'use client'
 
-import { TypeLoading } from '@/shared/types'
-import { createContext, FC, ReactNode, useState } from 'react'
+import { userApi } from '@/shared/api'
+import { IUser, TypeLoading } from '@/shared/types'
+import {
+	createContext,
+	Dispatch,
+	FC,
+	ReactNode,
+	SetStateAction,
+	useEffect,
+	useState,
+} from 'react'
 
 interface GlobalContextProps {
 	isLoading: boolean
 	setLoading: TypeLoading
+	user: IUser | null
+	setUser: Dispatch<SetStateAction<IUser | null>>
 }
 
 export const GlobalContext = createContext<GlobalContextProps>({
 	isLoading: false,
 	setLoading: () => {},
+	user: null,
+	setUser: () => {},
 })
 
 interface GlobalProviderProps {
@@ -19,9 +32,20 @@ interface GlobalProviderProps {
 
 const GlobalProvider: FC<GlobalProviderProps> = ({ children }) => {
 	const [isLoading, setLoading] = useState(false)
+	const [user, setUser] = useState<IUser | null>(null)
+
+	useEffect(() => {
+		;(async () => {
+			try {
+				const user = await userApi.refresh()
+				setUser(user)
+				console.log(user)
+			} catch (e) {}
+		})()
+	}, [])
 
 	return (
-		<GlobalContext.Provider value={{ isLoading, setLoading }}>
+		<GlobalContext.Provider value={{ isLoading, setLoading, user, setUser }}>
 			{children}
 		</GlobalContext.Provider>
 	)

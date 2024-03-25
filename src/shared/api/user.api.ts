@@ -1,5 +1,11 @@
 import { api } from './instance'
-import { IUserLogin, IUserRegister } from '../types'
+import {
+	IUser,
+	IUserConfirmEmail,
+	IUserLogin,
+	IUserRegister,
+	IUserSendCode,
+} from '../types'
 import { USER_ROUTE } from '@/shared/constants'
 
 export const userApi = {
@@ -11,6 +17,17 @@ export const userApi = {
 		})
 	},
 
+	async confirmEmail(dto: IUserConfirmEmail) {
+		const { email, token } = dto
+
+		const res = await api.post<IUser>(`${USER_ROUTE}/confirm-email`, {
+			email,
+			token,
+		})
+
+		return res.data
+	},
+
 	async login(dto: IUserLogin) {
 		const { email } = dto
 
@@ -19,7 +36,20 @@ export const userApi = {
 		})
 	},
 
-	async sendCode() {
-		
-	}
+	async sendCode(dto: IUserSendCode) {
+		const { code, email } = dto
+
+		const res = await api.post<IUser>(`${USER_ROUTE}/send-code`, {
+			code,
+			email,
+		})
+
+		return res.data
+	},
+
+	async refresh() {
+		const res = await api.get<IUser>(`${USER_ROUTE}/refresh`)
+
+		return res.data
+	},
 }

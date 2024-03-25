@@ -10,5 +10,5 @@ export async function setAuthToken(authToken: string) {
 	const oneMonth = new Date()
 	oneMonth.setMonth(oneMonth.getMonth() + 1)
 
-	cookies().set('auth_token', authToken, { httpOnly: true, expires: oneMonth })
+	cookies().set('auth_token', authToken, { expires: oneMonth })
 }

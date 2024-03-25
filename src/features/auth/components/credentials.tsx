@@ -89,8 +89,13 @@ export const Credentials = ({
 
 	return (
 		<>
-			<Typography variant='h4'>Authentication</Typography>
-			<Typography variant='body1' color={'red'}>
+			<Typography variant='h5' fontWeight={500}>
+				Sign to your Account
+			</Typography>
+			<Typography
+				variant='body1'
+				sx={{ color: 'red', position: 'absolute', top: '130px' }}
+			>
 				{error}
 			</Typography>
 			<TextField
@@ -104,8 +109,9 @@ export const Credentials = ({
 				disabled={isLoading}
 				variant='contained'
 				color='secondary'
+				sx={{ marginTop: '15px' }}
 			>
-				{isLoading ? <CircularProgress /> : 'Register'}
+				Register
 			</Button>
 			<Button
 				onClick={loginHandler}
@@ -113,7 +119,7 @@ export const Credentials = ({
 				variant='contained'
 				color='secondary'
 			>
-				{isLoading ? <CircularProgress /> : 'Login'}
+				Login
 			</Button>
 		</>
 	)

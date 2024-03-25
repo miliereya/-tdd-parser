@@ -7,7 +7,7 @@ interface Props {
 	backHandler: () => void
 }
 
-export const AccountConfirmation = ({ backHandler, email }: Props) => {
+export const ConfirmationNotification = ({ backHandler, email }: Props) => {
 	return (
 		<>
 			<Typography variant='body1' textAlign={'center'}>

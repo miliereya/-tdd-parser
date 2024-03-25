@@ -9,50 +9,12 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { userApi } from '@/shared/api'
 
 export const CreateTemplatePage = () => {
-	const [pres, setPres] = useState<null | Workbook>(null)
-
 	const [groups, setGroups] = useState<IGroup[]>([])
 
 	const [groupTitle, setGroupTitle] = useState('')
 	const [groupParentField, setGroupParentField] = useState('')
 
 	const [cells, setCells] = useState<string[]>([])
-
-	useEffect(() => {
-		const register = async () => {
-			console.log(await userApi.register({ email: 'qw' }))
-		}
-		register()
-	}, [])
-
-	const loadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-		try {
-			if (!e.target.files) return
-			const wb = new Workbook() // create workBook.
-
-			// const file = await (await fetch('/template_1.xlsx')).arrayBuffer()
-			const file = await e.target.files[0].arrayBuffer()
-			await wb.xlsx.load(file) // load our template to our instance.
-			setPres(wb) // set instance to state // we can use ref
-			const cells: string[] = []
-			wb.getWorksheet('Лоджистли')?.eachRow((r, n) => {
-				r.eachCell((c) => {
-					const val = c.value?.toString()
-					if (val && val.startsWith('CELL_')) {
-						cells.push(val)
-					}
-				})
-			})
-
-			setCells(
-				Array.from(new Set(cells)).sort(
-					(a, b) => +a.split('_')[1] - +b.split('_')[1]
-				)
-			)
-		} catch (error) {
-			console.log(error)
-		}
-	}
 
 	const addGroupHandler = () => {
 		if (!groupParentField || !groupTitle) return
@@ -82,12 +44,12 @@ export const CreateTemplatePage = () => {
 				justifyContent: 'center',
 			}}
 		>
-			<TextField
+			{/* <TextField
 				size='small'
 				sx={{ maxWidth: '250px' }}
 				type='file'
 				onChange={loadHandler}
-			/>
+			/> */}
 			<Box
 				sx={{
 					display: 'grid',

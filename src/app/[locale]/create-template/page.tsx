@@ -1,4 +1,4 @@
-import { CreateTemplatePage } from '@/_pages/create-template-page'
+import { CreateTemplatePage } from '@/pages/create-template-page'
 
 export default async function CreateTemplate() {
 	return <CreateTemplatePage />

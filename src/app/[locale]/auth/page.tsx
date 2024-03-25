@@ -1,4 +1,4 @@
-import { AuthPage } from '@/_pages/auth-page'
+import { AuthPage } from '@/pages/auth-page'
 
 export default function Auth() {
 	return <AuthPage />

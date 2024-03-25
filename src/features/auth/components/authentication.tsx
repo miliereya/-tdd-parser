@@ -1,17 +1,10 @@
 'use client'
 
-import {
-	Box,
-	Button,
-	CircularProgress,
-	Paper,
-	TextField,
-	Typography,
-} from '@mui/material'
+import { Box, Paper } from '@mui/material'
 import { useState } from 'react'
 import { TypeAuthState } from '../types/state-types'
 import { Credentials } from './credentials'
-import { AccountConfirmation } from './account-confirmation'
+import { ConfirmationNotification } from './confirmation-notification'
 import { CodeConfirmation } from './code-confirmation'
 
 export const Authentication = () => {
@@ -45,6 +38,7 @@ export const Authentication = () => {
 				sx={{
 					display: 'flex',
 					flexDirection: 'column',
+					position: 'relative',
 					gap: '20px',
 					padding: '20px',
 					maxWidth: '300px',
@@ -61,7 +55,7 @@ export const Authentication = () => {
 					/>
 				)}
 				{currentState === 'account confirmation' && (
-					<AccountConfirmation email={email} backHandler={backHandler} />
+					<ConfirmationNotification email={email} backHandler={backHandler} />
 				)}
 				{currentState === 'code' && (
 					<CodeConfirmation email={email} backHandler={backHandler} />
