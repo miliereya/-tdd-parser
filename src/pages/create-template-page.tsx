@@ -14,13 +14,18 @@ export const CreateTemplatePage = () => {
 	const [groupTitle, setGroupTitle] = useState('')
 	const [groupParentField, setGroupParentField] = useState('')
 
-	const [cells, setCells] = useState<string[]>([])
+	const [cells, setCells] = useState<string[]>(['CELL_1', 'CELL_2', 'CELL_3'])
 
 	const addGroupHandler = () => {
 		if (!groupParentField || !groupTitle) return
 		setGroups((prev) => [
 			...prev,
-			{ title: groupTitle, parentField: groupParentField, fields: [] },
+			{
+				title: groupTitle,
+				parentField: groupParentField,
+				fields: [],
+				withDb: true,
+			},
 		])
 	}
 
