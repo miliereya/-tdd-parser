@@ -3,3 +3,4 @@ export type TypeCreateTemplateState =
 	| 'loading data'
 	| 'loaded file'
 	| 'chaining cells'
+	| 'titling template'

@@ -38,19 +38,7 @@ export const CellSelect = ({
 				<MenuItem value=''>
 					<em>Select</em>
 				</MenuItem>
-				{options.map((option) => {
-					const { fields } = option
 
-					return (
-						<Fragment>
-							{fields.map((field) => (
-								<MenuItem onClick={onClickOption} value={field.value}>
-									{field.value}
-								</MenuItem>
-							))}
-						</Fragment>
-					)
-				})}
 				<MenuItem value={separator}>{separator}</MenuItem>
 			</Select>
 		</FormControl>

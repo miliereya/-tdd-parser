@@ -1,4 +1,4 @@
-import { ICellValue, IGroup } from '@/shared/types/template.types'
+import { ICellValue, IGroup, TypeCellValue } from '@/shared/types'
 import {
 	Box,
 	Button,
@@ -23,9 +23,18 @@ export const Cell = ({ cell, groups }: CustomSelectProps) => {
 	const [separator, setSeparator] = useState('')
 	const [isAddingValue, setAddingValue] = useState(false)
 
-	const [toggleSeparator, setToggleSeparator] = useState(false)
-
 	const [cellValues, setCellValues] = useState<ICellValue[]>([])
+
+	const removeValueHandler = (index: number) => {
+		setCellValues((prev) => {
+			const newArr = []
+			for (let i = 0; i < prev.length; i++) {
+				if (i === index) continue
+				newArr.push(prev[i])
+			}
+			return newArr
+		})
+	}
 
 	return (
 		<Box
@@ -46,24 +55,66 @@ export const Cell = ({ cell, groups }: CustomSelectProps) => {
 						borderBottom: '2px solid #000',
 						width: '100%',
 						paddingBottom: '10px',
+						display: 'flex',
+						alignItems: 'center',
+						gap: '8px',
 					}}
 				>
-					{/* <Button
-						variant='contained'
-						color='info'
-						size='small'
-						onClick={() => setToggleSeparator((separator) => !separator)}
-					>
-						Separator
-					</Button> */}
-					{/* {toggleSeparator && (
-						<Input
-							sx={{ maxWidth: '30px' }}
-							value={separator}
-							onChange={(e) => setSeparator(e.target.value)}
-							size='small'
-						/>
-					)} */}
+					{cellValues.map(({ type, value, fieldIndex, title }, i) => {
+						return (
+							<Box
+								key={fieldIndex + value + type}
+								sx={{
+									position: 'relative',
+                                    minWidth: '20px'
+								}}
+							>
+								<Button
+									onClick={() => removeValueHandler(i)}
+									size='small'
+									variant='contained'
+									color='error'
+									sx={{
+										top: '-30px',
+										position: 'absolute',
+										minWidth: '100%',
+										height: '20px',
+										fontSize: '10px',
+									}}
+								>
+									x
+								</Button>
+								<Typography
+									sx={
+										type === 'input'
+											? {
+													background: '#7979dc',
+													display: 'flex',
+													height: '31px',
+													alignItems: 'center',
+													justifyContent: 'center',
+													borderRadius: '5px',
+													padding: '0px 8px',
+													color: '#fff',
+											  }
+											: {
+													display: 'flex',
+													height: '31px',
+													alignItems: 'center',
+													justifyContent: 'center',
+											  }
+									}
+								>
+									{title && (
+										<span style={{ marginRight: '10px', fontWeight: '700' }}>
+											{title}:
+										</span>
+									)}
+									{value === '(space)' ? '(space)' : value}
+								</Typography>
+							</Box>
+						)
+					})}
 					{!isAddingValue && (
 						<Button
 							onClick={() => setAddingValue(true)}
@@ -81,7 +132,7 @@ export const Cell = ({ cell, groups }: CustomSelectProps) => {
 					<CellSelect
 						groups={groups}
 						separator={separator}
-						onClickOption={() => console.log('clicked')}
+						setCellValues={setCellValues}
 						closeHandler={() => setAddingValue(false)}
 					/>
 				)}

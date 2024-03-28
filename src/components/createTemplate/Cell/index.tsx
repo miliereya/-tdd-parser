@@ -1,14 +1,5 @@
 import { ICellValue, IGroup } from '@/shared/types/template.types'
-import {
-	Button,
-	Input,
-	MenuItem,
-	Paper,
-	Select,
-	Stack,
-	TextField,
-	Typography,
-} from '@mui/material'
+import { Button, Input, Paper, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import { CellSelect } from '../CellSelect'
 
@@ -24,10 +15,6 @@ export const Cell = ({ cell, options }: CustomSelectProps) => {
 	const [toggleSeparator, setToggleSeparator] = useState(false)
 
 	const [cellValues, setCellValues] = useState<ICellValue[]>([])
-
-	const onClickAdd = () => {
-		setCellValues((values) => [...values, { value: '', fieldIndex: 1 }])
-	}
 
 	return (
 		<Paper
@@ -56,12 +43,7 @@ export const Cell = ({ cell, options }: CustomSelectProps) => {
 						size='small'
 					/>
 				)}
-				<Button
-					onClick={onClickAdd}
-					size='small'
-					variant='contained'
-					color='success'
-				>
+				<Button size='small' variant='contained' color='success'>
 					+
 				</Button>
 			</Stack>

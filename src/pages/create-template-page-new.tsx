@@ -6,6 +6,7 @@ import {
 	TemplateGroup,
 	TypeCreateTemplateState,
 } from '@/features/create-template'
+import { TitleTemplate } from '@/features/create-template/components/title-template'
 import { IGroup } from '@/shared/types'
 import { Box, Paper } from '@mui/material'
 import { useState } from 'react'
@@ -14,6 +15,7 @@ export const CreateTemplatePageNew = () => {
 	const [currentState, setCurrentState] =
 		useState<TypeCreateTemplateState>('chaining cells')
 	const [cells, setCells] = useState<string[]>(['CELL_1', 'CELL_2', 'CELL_3'])
+	const [title, setTitle] = useState('')
 	const [templateFile, setTemplateFile] = useState<ArrayBuffer>()
 	const [groups, setGroups] = useState<IGroup[]>([
 		{
@@ -58,7 +60,14 @@ export const CreateTemplatePageNew = () => {
 				/>
 			)}
 			{currentState === 'chaining cells' && (
-				<ChainCells groups={groups} cells={cells} />
+				<ChainCells
+					setCurrentState={setCurrentState}
+					groups={groups}
+					cells={cells}
+				/>
+			)}
+			{currentState === 'titling template' && (
+				<TitleTemplate setTitle={setTitle} title={title} />
 			)}
 		</>
 	)

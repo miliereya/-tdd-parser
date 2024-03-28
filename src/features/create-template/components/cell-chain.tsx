@@ -1,15 +1,16 @@
-import { Box, Paper, Typography } from '@mui/material'
-import { useState } from 'react'
+import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import { Cell } from './cell'
-import { Group } from 'next/dist/shared/lib/router/utils/route-regex'
 import { IGroup } from '@/shared/types'
+import { Dispatch, SetStateAction } from 'react'
+import { TypeCreateTemplateState } from '..'
 
 interface Props {
 	cells: string[]
 	groups: IGroup[]
+	setCurrentState: Dispatch<SetStateAction<TypeCreateTemplateState>>
 }
 
-export const ChainCells = ({ cells, groups }: Props) => {
+export const ChainCells = ({ cells, groups, setCurrentState }: Props) => {
 	return (
 		<>
 			<Box
@@ -36,8 +37,8 @@ export const ChainCells = ({ cells, groups }: Props) => {
 					elevation={4}
 				>
 					<Typography variant='h4'>Chain Cells</Typography>
-					{cells.map((i) => {
-						return <Cell groups={groups} cell={i} key={i + new Date()} />
+					{cells.map((с) => {
+						return <Cell groups={groups} cell={с} key={с} />
 					})}
 				</Paper>
 			</Box>
