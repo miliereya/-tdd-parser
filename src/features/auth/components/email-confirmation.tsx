@@ -5,21 +5,22 @@ import { redirect, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { TypeEmailConfirmationState } from '../types/state-types'
 import { useGlobalContext } from '@/shared/hooks'
+import { useTranslation } from 'react-i18next'
 
 export const EmailConfirmation = () => {
 	const { setUser } = useGlobalContext()
 
 	const { push } = useRouter()
 
-	const [message, setMessage] = useState<TypeEmailConfirmationState>(
-		'Confirming your email...'
-	)
+	const [message, setMessage] = useState('Confirming your email...')
 	const [isLoading, setLoading] = useState(true)
 
 	const params = useSearchParams()
 
-	const token = params.get('token')
-	const email = params.get('email')
+	const token = params?.get('token')
+	const email = params?.get('email')
+
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		if (!token || !email) {
@@ -31,10 +32,12 @@ export const EmailConfirmation = () => {
 				const user = await userApi.confirmEmail({ email, token })
 
 				setUser(user)
-				setMessage('Success! You will be redirected in a second!')
+				setMessage(
+					t('email-confirmation.Success! You will be redirected in a second!')
+				)
 
 				setTimeout(() => {
-					push('/main')
+					push('/templates')
 				}, 1000)
 			} catch (e) {
 				if (axios.isAxiosError(e)) {
@@ -46,7 +49,7 @@ export const EmailConfirmation = () => {
 
 					switch (message) {
 						default:
-							setMessage('Something went wrong...')
+							setMessage(t('email-confirmation.Something went wrong...'))
 							setTimeout(() => {
 								push('/auth')
 							}, 1000)
@@ -56,7 +59,7 @@ export const EmailConfirmation = () => {
 				setLoading(false)
 			}
 		})()
-	}, [email, token, setUser, push])
+	}, [email, token, setUser, push, t])
 
 	return (
 		<Box

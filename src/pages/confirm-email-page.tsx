@@ -2,7 +2,7 @@
 
 import { EmailConfirmation } from '@/features/auth'
 
-export const ConfirmEmailPage = () => {
+export default function ConfirmEmailPage() {
 	return (
 		<>
 			<EmailConfirmation />

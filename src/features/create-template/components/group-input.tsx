@@ -1,15 +1,16 @@
 import { IField, IGroup, TypeFieldSize } from '@/shared/types'
 import { v4 as uuidv4 } from 'uuid'
-import {
-	Box,
-	Button,
-	Grid,
-	Paper,
-	Stack,
-	TextField,
-	Typography,
-} from '@mui/material'
+import { Button, Grid, TextField, Typography } from '@mui/material'
 import { ChangeEvent, useState } from 'react'
+import {
+	Accordion,
+	Card,
+	Heading,
+	PrimaryButton,
+	PrimaryInput,
+	Text,
+} from '@/shared/ui'
+import { useTranslation } from 'react-i18next'
 
 export const InputGroup = ({
 	fields,
@@ -55,101 +56,74 @@ export const InputGroup = ({
 		)
 	}
 
+	const { t } = useTranslation()
+
 	return (
-		<Box
+		<Card
 			sx={{
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-				width: '100%',
 				marginTop: '40px',
+				outline: isSaved ? '0' : '2px solid #f6ef28',
+				outlineStyle: 'dashed',
+				alignItems: 'left',
 			}}
+			fullWidth
 		>
-			<Paper
-				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					position: 'relative',
-					gap: '20px',
-					padding: '25px 25px 45px',
-					margin: '0 20px',
-					width: '1000px',
-					inset: 0,
-					outline: isSaved ? '0' : '2px solid #f6ef28',
-					outlineStyle: 'dashed',
-				}}
-				elevation={4}
+			<PrimaryButton
+				onClick={deleteGroupHandler}
+				sx={{ position: 'absolute', right: '25px', minWidth: '45px' }}
+				color='error'
 			>
-				<Button
-					onClick={deleteGroupHandler}
-					color='secondary'
-					size='small'
-					variant='contained'
-					sx={{
-						right: '25px',
-						minWidth: '35px',
-						height: '30px',
-						position: 'absolute',
-					}}
+				X
+			</PrimaryButton>
+			<Heading centered={false}>{title}</Heading>
+			<Text>
+				<b>{t('group-input.Parent field')}:</b> {parentField}
+			</Text>
+			<Accordion fullWidth={false} gap={'20px'}>
+				<PrimaryButton
+					onClick={() => saveGroupHandler(inputFields, title)}
+					color='success'
 				>
-					X
-				</Button>
-				<Typography variant='h4'>{title}</Typography>
-				<Stack direction={'row'} alignItems={'flex-end'} spacing={2}>
-					<Typography variant='h5'>{parentField}</Typography>
-					<Button
-						size='small'
-						variant='contained'
-						onClick={() => saveGroupHandler(inputFields, title)}
+					{t('save')}
+				</PrimaryButton>
+				<PrimaryButton onClick={() => addField('small')} color='success'>
+					{t('group-input.+ Input (small)')}
+				</PrimaryButton>
+				<PrimaryButton onClick={() => addField('large')} color='success'>
+					{t('group-input.+ Input (large)')}
+				</PrimaryButton>
+			</Accordion>
+			<Grid gap={'20px'} container width={'100%'}>
+				{inputFields.map(({ index, value, size }, i) => (
+					<Grid
+						key={index}
+						item
+						position={'relative'}
+						width={size === 'small' ? '272.5px' : '100%'}
 					>
-						save
-					</Button>
-					<Button
-						size='small'
-						variant='contained'
-						onClick={() => addField('small')}
-					>
-						+ Input (small)
-					</Button>
-					<Button
-						size='small'
-						variant='contained'
-						onClick={() => addField('large')}
-					>
-						+ Input (large)
-					</Button>
-				</Stack>
-				<Grid spacing={2} container>
-					{inputFields.map(({ index, value, size }, i) => (
-						<Grid key={index} item position={'relative'}>
-							<TextField
-								size='small'
-								variant='filled'
-								onChange={(e) => handleChangeInput(e, index)}
-								disabled={i === 0}
-								defaultValue={value}
-								sx={{ width: size === 'small' ? '225px' : '950px' }}
-							/>
-							{i !== 0 && (
-								<Button
-									onClick={() => deleteField(index)}
-									color='secondary'
-									size='small'
-									variant='contained'
-									sx={{
-										right: '0',
-										minWidth: '15px',
-										height: '20px',
-										position: 'absolute',
-									}}
-								>
-									X
-								</Button>
-							)}
-						</Grid>
-					))}
-				</Grid>
-			</Paper>
-		</Box>
+						<PrimaryInput
+							onChange={(e) => handleChangeInput(e, index)}
+							disabled={i === 0}
+							defaultValue={value}
+							filled
+						/>
+						{i !== 0 && (
+							<PrimaryButton
+								onClick={() => deleteField(index)}
+								color='secondary'
+								sx={{
+									right: '0',
+									minWidth: '10px',
+									height: '20px',
+									position: 'absolute',
+								}}
+							>
+								X
+							</PrimaryButton>
+						)}
+					</Grid>
+				))}
+			</Grid>
+		</Card>
 	)
 }

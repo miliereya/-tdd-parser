@@ -5,6 +5,7 @@ import {
 	IFullSearchData,
 	ISearchData,
 	IUpdateData,
+	SearchDataResults,
 } from '@/shared/types'
 import { api } from './instance'
 
@@ -12,11 +13,11 @@ const dataUrl = 'data'
 
 export const dataApi = {
 	async create(dto: ICreateData) {
-		const { data, parentField, table } = dto
-		await api.post(`${dataUrl}/create-many?table${table}`, {
-			data,
-			parentField,
-		})
+		// const { data, parentField, table } = dto
+		// await api.post(`${dataUrl}/create-many?table${table}`, {
+		// 	data,
+		// 	parentField,
+		// })
 	},
 
 	async createMany(dto: ICreateData[]) {
@@ -24,9 +25,9 @@ export const dataApi = {
 	},
 
 	async search(dto: ISearchData) {
-		const { parentField, table, value } = dto
-		const res = await api.get<IData[]>(
-			`${dataUrl}/search?table=${table}&parentField=${parentField}&value=${value}`
+		const { parentIndex, title, value } = dto
+		const res = await api.get<IData[], { data: SearchDataResults[] }>(
+			`${dataUrl}/search?title=${title}&parentIndex=${parentIndex}&value=${value}`
 		)
 		return res.data
 	},

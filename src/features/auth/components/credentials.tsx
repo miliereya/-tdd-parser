@@ -1,4 +1,3 @@
-import { Button, CircularProgress, TextField, Typography } from '@mui/material'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useGlobalContext } from '@/shared/hooks'
 import { userApi } from '@/shared/api'
@@ -6,9 +5,18 @@ import axios from 'axios'
 import {
 	ERROR_CONFIRM_YOUR_EMAIL,
 	ERROR_EMAIL_IS_ALREADY_USED,
+	ERROR_EMAIL_IS_NOT_CONFIRMED,
 	ERROR_INVALID_EMAIL,
 	ERROR_USER_WAS_NOT_FOUND,
 } from '../config/error-config'
+import {
+	Accordion,
+	Heading,
+	PrimaryButton,
+	PrimaryInput,
+	TextError,
+} from '@/shared/ui'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
 	toAccountConfirmationHandler: () => void
@@ -24,6 +32,8 @@ export const Credentials = ({
 	setEmail,
 }: Props) => {
 	const { isLoading, setLoading } = useGlobalContext()
+
+	const { t } = useTranslation()
 
 	const [error, setError] = useState('')
 
@@ -43,13 +53,16 @@ export const Credentials = ({
 
 				switch (message) {
 					case ERROR_INVALID_EMAIL:
-						setError('Invalid email format')
+						setError(t('credentials.Invalid email format'))
 						break
 					case ERROR_EMAIL_IS_ALREADY_USED:
-						setError('Email is already used')
+						setError(t('credentials.Email is already used'))
+						break
+					case ERROR_EMAIL_IS_NOT_CONFIRMED:
+						toAccountConfirmationHandler()
 						break
 					default:
-						setError('Unexpected error')
+						setError(t('credentials.Unexpected error'))
 				}
 			}
 		} finally {
@@ -76,10 +89,10 @@ export const Credentials = ({
 						toAccountConfirmationHandler()
 						break
 					case ERROR_USER_WAS_NOT_FOUND:
-						setError('Wrong email address')
+						setError(t('Wrong email address'))
 						break
 					default:
-						setError('Unexpected error')
+						setError(t('Unexpected error'))
 				}
 			}
 		} finally {
@@ -89,38 +102,25 @@ export const Credentials = ({
 
 	return (
 		<>
-			<Typography variant='h5' fontWeight={500}>
-				Sign to your Account
-			</Typography>
-			<Typography
-				variant='body1'
-				sx={{ color: 'red', position: 'absolute', top: '130px' }}
-			>
-				{error}
-			</Typography>
-			<TextField
-				type='email'
+			<Heading>{t('credentials.Sign to your Account')}</Heading>
+			<PrimaryInput
 				onChange={(e) => setEmail(e.target.value)}
 				value={email}
 				label='E-mail'
 			/>
-			<Button
-				onClick={registerHandler}
-				disabled={isLoading}
-				variant='contained'
-				color='secondary'
-				sx={{ marginTop: '15px' }}
-			>
-				Register
-			</Button>
-			<Button
-				onClick={loginHandler}
-				disabled={isLoading}
-				variant='contained'
-				color='secondary'
-			>
-				Login
-			</Button>
+			<TextError text={error} />
+			<Accordion row={false} gap='10px'>
+				<PrimaryButton
+					onClick={registerHandler}
+					disabled={isLoading}
+					sx={{ marginTop: '15px' }}
+				>
+					{t('credentials.Register')}
+				</PrimaryButton>
+				<PrimaryButton onClick={loginHandler} disabled={isLoading}>
+					{t('credentials.Login')}
+				</PrimaryButton>
+			</Accordion>
 		</>
 	)
 }

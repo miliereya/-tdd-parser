@@ -1,5 +1,5 @@
 import { SERVER_URL } from '@/shared/constants/api.constants'
-import { getAuthToken, setAuthToken } from '@/lib/actions'
+import { getAuthToken, setAuthToken } from '@/shared/lib/token-actions'
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 export const api = axios.create({

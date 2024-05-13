@@ -2,11 +2,13 @@
 
 import { userApi } from '@/shared/api'
 import { useGlobalContext } from '@/shared/hooks'
-import { Button, TextField, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import axios from 'axios'
 import { useState } from 'react'
 import { ERROR_CODE_EXPIRED, ERROR_INVALID_CODE } from '../config/error-config'
 import { useRouter } from 'next/navigation'
+import { PrimaryButton, PrimaryInput, Text, TextError } from '@/shared/ui'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
 	email: string
@@ -21,6 +23,7 @@ export const CodeConfirmation = ({ backHandler, email }: Props) => {
 	const [code, setCode] = useState('')
 
 	const { push } = useRouter()
+	const { t } = useTranslation()
 
 	const sendCodeHandler = async (value: string) => {
 		const regexp = new RegExp(/([1-9])/)
@@ -37,7 +40,7 @@ export const CodeConfirmation = ({ backHandler, email }: Props) => {
 				setSuccess(true)
 				setUser(user)
 
-				push('/main')
+				push('/templates')
 			} catch (e) {
 				if (axios.isAxiosError(e)) {
 					const data = e.response?.data
@@ -48,16 +51,16 @@ export const CodeConfirmation = ({ backHandler, email }: Props) => {
 
 					switch (message) {
 						case ERROR_INVALID_CODE:
-							setError('Wrong code')
+							setError(t('code-confirmation.Wrong code'))
 							break
 						case ERROR_CODE_EXPIRED:
-							setError('Code is expired. Try again')
+							setError(t('code-confirmation.Code is expired. Try again'))
 							setTimeout(() => {
 								backHandler()
 							}, 2000)
 							break
 						default:
-							setError('Unexpected error')
+							setError(t('code-confirmation.Unexpected error'))
 					}
 				}
 			} finally {
@@ -68,41 +71,31 @@ export const CodeConfirmation = ({ backHandler, email }: Props) => {
 
 	return (
 		<>
-			<Typography variant='body1' textAlign={'center'}>
-				A verification code has been sent to your email!
-			</Typography>
+			<Text centered>
+				{t(
+					'code-confirmation.A verification code has been sent to your email!'
+				)}
+			</Text>
 			<Typography variant='body1' fontWeight={700} textAlign={'center'}>
-				{email}
+				{t('code-confirmation.Email')}: {email}
 			</Typography>
-			<TextField
+			<PrimaryInput
 				type='number'
 				onChange={(e) => sendCodeHandler(e.target.value)}
 				value={code}
-				label='Enter your code here'
+				label={t('code-confirmation.Enter your code here')}
 				disabled={isLoading}
 			/>
-			<Typography
-				variant='body1'
-				sx={{ color: 'red', position: 'absolute', bottom: '95px' }}
-			>
-				{error}
-			</Typography>
+			<TextError text={error} />
 			{isSuccess && (
 				<Typography
 					variant='body1'
 					sx={{ color: 'green', position: 'absolute', bottom: '65px' }}
 				>
-					Success! You will be redirected in a second
+					{t('code-confirmation.Success! You will be redirected in a second')}
 				</Typography>
 			)}
-			<Button
-				onClick={backHandler}
-				variant='contained'
-				color='secondary'
-				sx={{ marginTop: '45px' }}
-			>
-				Go Back
-			</Button>
+			<PrimaryButton onClick={backHandler}>Go Back</PrimaryButton>
 		</>
 	)
 }

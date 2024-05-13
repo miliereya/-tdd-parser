@@ -8,18 +8,16 @@ export interface IData {
 	data: object
 }
 
-export interface ICreateData extends ITableBase {
-	parentField: string
-	data: object
+export interface ICreateData {
+	parentIndex: string
+	fields: { index: string; value: string }[]
+	updateId?: string
 }
 
-export interface ICreateManyData {
-	data: ({ _id?: string } & ICreateData)[]
-}
-
-export interface ISearchData extends ITableBase {
-	parentField: string
+export interface ISearchData {
+	parentIndex: string
 	value: string
+	title: string
 }
 
 export interface IFullSearchData extends ITableBase {}

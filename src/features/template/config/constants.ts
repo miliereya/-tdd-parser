@@ -1,0 +1,1 @@
+export const AMAZON_TEMPLATE_URL = 'https://tdd-templates.s3.us-east-2.amazonaws.com/' 

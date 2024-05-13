@@ -1,12 +1,99 @@
 {
-	"converter": "Конвертор",
+	"converter": "Конвертер",
+	"Unexpected error": "Неочікувана помилка",
+	"Go Back": "Назад",
+	"Back": "Назад",
+	"Next": "Далі",
+	"Save": "Зберегти",
+	"save": "Зберегти",
+	"Edit": "Редагувати",
+	"Add": "Додати",
+	"Delete": "Видалити",
+	"Press to load": "Завантажити",
 	"nav": {
-		"cars": "Автомобілі",
-		"trailers": "Причіпи",
-		"drivers": "Водії",
-		"customers": "Замовники",
-		"carriers": "Перевізники",
-		"consignors": "Вантажовідправники",
-		"consignees": "Вантажоодержувачи"
+		"create-template": "Новий Шаблон",
+		"templates": "Шаблони",
+		"databases": "Бази даних",
+		"logout": "Вихід",
+		"sign": "Вхід"
+	},
+	"credentials": {
+		"Sign to your Account": "Увійдіть у свій акаунт",
+		"Register": "Зареєструватися",
+		"Login": "Вхiд",
+		"Wrong email address": "Неправильна електронна адреса",
+		"Invalid email format": "Недійсна електронна пошта",
+		"Email is already used": "Електронна пошта вже використовується"
+	},
+	"code-confirmation": {
+		"A verification code has been sent to your email!": "Код підтвердження надіслано на вашу електронну пошту!",
+		"Email": "Email",
+		"Enter your code here": "Введіть свій код тут",
+		"Success! You will be redirected in a second": "Успіх! Ви будете перенаправлені за секунду",
+		"Wrong code": "Невірний код",
+		"Code is expired. Try again": "Термін дії коду минув. Спробуйте знову"
+	},
+	"confirmation-notification": {
+		"Check your email to confirm your account!": "Перевірте свою електронну пошту, щоб підтвердити обліковий запис!"
+	},
+	"email-confirmation": {
+		"Success! You will be redirected in a second!": "Успіх! Ви будете перенаправлені за секунду!",
+		"Something went wrong...": "Щось пішло не так..."
+	},
+	"file-input": {
+		"Import excel template": "Імпорт шаблону excel",
+		"Empty template error": "Помилка порожнього шаблону",
+		"Wrong filled template": "Неправильно заповнений шаблон"
+	},
+	"group": {
+		"Group title is already used": "Назва групи вже використовується",
+		"All fields should be filled in": "Усі поля мають бути заповнені",
+		"All fields are required": "Всі поля обов'язкові для заповнення",
+		"All fields should be unique": "Усі поля мають бути унікальними",
+		"You should have at least one group": "Ви повинні мати принаймні одну групу",
+		"Save all groups at first": "Спочатку збережіть усі групи",
+		"Data groups": "Групи даних",
+		"Group title": "Назва групи",
+		"Group parent": "Головне поле",
+		"add group": "додати групу",
+		"add group ( with database )": "додати групу ( з базою даних )"
+	},
+	"group-input": {
+		"Parent field": "Головне поле",
+		"+ Input (small)": "+ Поле (маленьке)",
+		"+ Input (large)": "+ Поле (велике)"
+	},
+	"cell-chain": {
+		"Chain Cells": "Заповнiть секції",
+		"Save ,all cells to continue": "Щоб продовжити, збережіть усі секції"
+	},
+	"cell": {
+		"Save new field at first": "Спочатку збережіть нове поле",
+		"Cell can't be empty": "Секція не може бути порожньою",
+		"+ input": "+ поле",
+		"+ operation": "+ операцiя"
+	},
+	"cell-select": {
+		"Text": "Текст",
+		"Don&#39;t add value": "Не добавлять",
+		"All cells must be filled": "Всі секції повинні бути заповнені"
+	},
+	"title-template": {
+		"Please enter a title": "Будь ласка, введіть назву",
+		"Title is already used": "Назва вже використана",
+		"Something went wrong...": "Щось пішло не так...",
+		"Enter a title for your template": "Введіть назву свого шаблону",
+		"Save template": "Зберегти шаблон"
+	},
+	"templates-list": {
+		"Error deleting template": "Помилка видалення шаблону",
+		"Search by Title": "Пошук за Назвою",
+		"You have no templates yet": "У вас ще немає шаблонів"
+	},
+	"template": {
+		"Template loaded successfully!": "Шаблон успішно завантажено!",
+		"Loading template...": "Завантаження шаблону...",
+		"Clear fields after upload?": "Очистити поля після завантаження?",
+		"Convert Template": "Конвертувати Шаблон"
 	}
 }

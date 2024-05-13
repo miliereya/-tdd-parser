@@ -1,98 +1,73 @@
 'use client'
 
-import { InputGroup } from '@/components/createTemplate/InputGroup'
-import { Cell } from '@/components/createTemplate/Cell'
-import { IField, IGroup } from '@/shared/types/template.types'
-import { Box, Button, Stack, TextField } from '@mui/material'
-import { Workbook } from 'exceljs'
-import { ChangeEvent, useEffect, useState } from 'react'
-import { userApi } from '@/shared/api'
+import {
+	ChainCells,
+	TemplateFileInput,
+	TemplateGroup,
+	TypeCreateTemplateState,
+} from '@/features/create-template'
+import { TitleTemplate } from '@/features/create-template/components/title-template'
+import { templateApi } from '@/shared/api/template.api'
+import { ICell, IGroup } from '@/shared/types'
+import { Container } from '@/shared/ui'
+import { useState } from 'react'
 
-export const CreateTemplatePage = () => {
+export default function CreateTemplatePage() {
+	const [currentState, setCurrentState] =
+		useState<TypeCreateTemplateState>('waiting for file')
+	const [cellsTitles, setCellsTitles] = useState<string[]>([])
+	const [cells, setCells] = useState<ICell[]>([])
+	const [title, setTitle] = useState('')
+	const [templateFile, setTemplateFile] = useState<File>()
 	const [groups, setGroups] = useState<IGroup[]>([])
 
-	const [groupTitle, setGroupTitle] = useState('')
-	const [groupParentField, setGroupParentField] = useState('')
+	const saveTemplateHandler = async () => {
+		if (!templateFile) return alert('Something went wrong')
 
-	const [cells, setCells] = useState<string[]>(['CELL_1', 'CELL_2', 'CELL_3'])
+		const nameArray = templateFile.name.split('.')
+		const fileType = nameArray[nameArray.length - 1]
 
-	const addGroupHandler = () => {
-		if (!groupParentField || !groupTitle) return
-		setGroups((prev) => [
-			...prev,
-			{
-				title: groupTitle,
-				parentField: groupParentField,
-				fields: [],
-				withDb: true,
-			},
-		])
-	}
-
-	const handleSave = (fields: IField[], title: string) => {
-		setGroups((groups) =>
-			groups.map((group) =>
-				group.title === title ? { ...group, fields: fields } : group
-			)
-		)
+		await templateApi.create({
+			cells,
+			groups,
+			title,
+			file: templateFile,
+			fileType,
+		})
 	}
 
 	return (
-		<div
-			style={{
-				height: '100%',
-				width: '100%',
-				paddingBlock: '20px',
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				justifyContent: 'center',
-			}}
-		>
-			{/* <TextField
-				size='small'
-				sx={{ maxWidth: '250px' }}
-				type='file'
-				onChange={loadHandler}
-			/> */}
-			<Box
-				sx={{
-					display: 'grid',
-					width: '100%',
-					maxWidth: '800px',
-					marginInline: 'auto',
-					gap: '10px',
-					gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))',
-				}}
-			>
-				{cells.map((i) => {
-					return <Cell options={groups} cell={i} key={i + new Date()} />
-				})}
-			</Box>
-			<br />
-			<br />
-			{groups.map((group) => (
-				<InputGroup saveHandler={handleSave} key={group.title} {...group} />
-			))}
-			<Stack spacing={2}>
-				<TextField
-					size='small'
-					label='Group title'
-					onChange={(e) => setGroupTitle(e.target.value)}
-					value={groupTitle}
+		<Container>
+			{(currentState === 'waiting for file' ||
+				currentState === 'loading data') && (
+				<TemplateFileInput
+					setCurrentState={setCurrentState}
+					setCellsTitles={setCellsTitles}
+					setTemplateFile={setTemplateFile}
 				/>
-				<TextField
-					size='small'
-					label='Group parent'
-					onChange={(e) => setGroupParentField(e.target.value)}
-					type='text'
-					value={groupParentField}
+			)}
+			{currentState === 'loaded file' && (
+				<TemplateGroup
+					groups={groups}
+					setGroups={setGroups}
+					setCurrentState={setCurrentState}
 				/>
-
-				<Button variant='contained' onClick={addGroupHandler}>
-					add group
-				</Button>
-			</Stack>
-		</div>
+			)}
+			{currentState === 'chaining cells' && (
+				<ChainCells
+					setCurrentState={setCurrentState}
+					groups={groups}
+					cellsTitles={cellsTitles}
+					setCells={setCells}
+				/>
+			)}
+			{currentState === 'titling template' && (
+				<TitleTemplate
+					saveTemplateHandler={saveTemplateHandler}
+					setTitle={setTitle}
+					title={title}
+				/>
+			)}
+		</Container>
 	)
 }

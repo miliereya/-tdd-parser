@@ -1,5 +1,6 @@
 export type TypeFieldSize = 'small' | 'large'
-export type TypeCellValue = 'separator' | 'input' | '+' | '-' | '*' | '/'
+export type TypeOperation = '+' | '-' | '*' | '/' | '>' | '<'
+export type TypeCellValue = 'separator' | 'input' | TypeOperation
 
 // Inputs
 export interface IField {
@@ -26,5 +27,14 @@ export interface ICellValue {
 
 export interface ICell {
 	index: string // CELL_1
-	value: ICellValue[]
+	values: ICellValue[]
+}
+
+export interface ITemplate {
+	_id: string
+	email: string
+	filePath: string
+	title: string
+	cells: ICell[]
+	groups: IGroup[]
 }

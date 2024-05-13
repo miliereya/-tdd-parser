@@ -11,6 +11,7 @@ import {
 	useEffect,
 	useState,
 } from 'react'
+import '@/assets/styles/globals.css'
 
 interface GlobalContextProps {
 	isLoading: boolean
@@ -31,7 +32,7 @@ interface GlobalProviderProps {
 }
 
 const GlobalProvider: FC<GlobalProviderProps> = ({ children }) => {
-	const [isLoading, setLoading] = useState(false)
+	const [isLoading, setLoading] = useState(true)
 	const [user, setUser] = useState<IUser | null>(null)
 
 	useEffect(() => {
@@ -40,7 +41,10 @@ const GlobalProvider: FC<GlobalProviderProps> = ({ children }) => {
 				const user = await userApi.refresh()
 				setUser(user)
 				console.log(user)
-			} catch (e) {}
+			} catch (e) {
+			} finally {
+				setLoading(false)
+			}
 		})()
 	}, [])
 

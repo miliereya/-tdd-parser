@@ -1,27 +1,15 @@
 import { ICellValue, IGroup, TypeCellValue } from '@/shared/types'
-import {
-	FormControl,
-	InputLabel,
-	MenuItem,
-	Select,
-	SelectChangeEvent,
-	Typography,
-} from '@mui/material'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { FormControl, MenuItem, Select, Typography } from '@mui/material'
+import { Dispatch, SetStateAction } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
 	groups: IGroup[]
-	separator: string
 	setCellValues: Dispatch<SetStateAction<ICellValue[]>>
 	closeHandler: () => void
 }
 
-export const CellSelect = ({
-	setCellValues,
-	groups,
-	separator,
-	closeHandler,
-}: Props) => {
+export const CellSelect = ({ setCellValues, groups, closeHandler }: Props) => {
 	const addCellValueHandler = (
 		type: TypeCellValue,
 		value: string,
@@ -31,6 +19,8 @@ export const CellSelect = ({
 		setCellValues((prev) => [...prev, { value, type, fieldIndex, title }])
 		closeHandler()
 	}
+
+	const { t } = useTranslation()
 
 	const addTextValueHandler = () => {
 		const text = prompt()
@@ -45,17 +35,20 @@ export const CellSelect = ({
 	}
 
 	return (
-		<FormControl variant='filled' sx={{ m: 1, minWidth: 120 }}>
+		<FormControl
+			variant='filled'
+			sx={{ minWidth: 120, marginTop: '20px', width: '100%' }}
+		>
 			<Select value={''}>
 				<MenuItem value='' onClick={addTextValueHandler}>
 					<Typography fontWeight={500} color={'#49a1e9'}>
-						Text
+						{t('cell-select.Text')}
 					</Typography>
 				</MenuItem>
 
 				<MenuItem value='' onClick={closeHandler}>
 					<Typography fontWeight={500} color={'red'}>
-						Don&#39;t add value
+						{t('cell-select.Don&#39;t add value')}
 					</Typography>
 				</MenuItem>
 				{groups.map(({ fields, title }) =>
@@ -74,7 +67,6 @@ export const CellSelect = ({
 						</MenuItem>
 					))
 				)}
-				<MenuItem value={separator}>{separator}</MenuItem>
 			</Select>
 		</FormControl>
 	)

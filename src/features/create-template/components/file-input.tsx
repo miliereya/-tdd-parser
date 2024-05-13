@@ -1,26 +1,26 @@
-import { Box, Button, Paper, Typography } from '@mui/material'
 import { Workbook } from 'exceljs'
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import { TypeCreateTemplateState } from '..'
 import { extractCellsFromWB, prepareCells } from '../lib/utils'
 import { ERROR_EMPTY_CELL, ERROR_NO_WS } from '../config/error.config'
-import {
-	ACCEPTED_FILES_EXTENSIONS,
-	LOAD_TEMPLATE_ID,
-} from '../config/constants'
+import { ACCEPTED_FILES_EXTENSIONS } from '../config/constants'
+import { Card, Centered, Container, FileInput, Heading } from '@/shared/ui'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
-	setCells: Dispatch<SetStateAction<string[]>>
-	setTemplateFile: Dispatch<SetStateAction<ArrayBuffer | undefined>>
+	setCellsTitles: Dispatch<SetStateAction<string[]>>
+	setTemplateFile: Dispatch<SetStateAction<File | undefined>>
 	setCurrentState: Dispatch<SetStateAction<TypeCreateTemplateState>>
 }
 
 export const TemplateFileInput = ({
-	setCells,
+	setCellsTitles,
 	setTemplateFile,
 	setCurrentState,
 }: Props) => {
 	const [error, setError] = useState('')
+
+	const { t } = useTranslation()
 
 	const loadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
 		try {
@@ -32,12 +32,11 @@ export const TemplateFileInput = ({
 			const file = await e.target.files[0].arrayBuffer()
 
 			await wb.xlsx.load(file) // load our template to our instance.
-
 			const cells = extractCellsFromWB(wb)
 			if (!cells.length) throw ERROR_EMPTY_CELL
 
-			setCells(prepareCells(cells))
-			setTemplateFile(file)
+			setCellsTitles(prepareCells(cells))
+			setTemplateFile(e.target.files[0])
 
 			setCurrentState('loaded file')
 		} catch (e) {
@@ -45,62 +44,26 @@ export const TemplateFileInput = ({
 
 			switch (e) {
 				case ERROR_NO_WS:
-					setError('Empty template error')
+					setError(t('file-input.Empty template error'))
 					break
 				case ERROR_EMPTY_CELL:
-					setError('Wrong filled template')
+					setError(t('file-input.Wrong filled template'))
 				default:
-					setError('Unexpected error')
+					setError(t('Unexpected error'))
 			}
 		}
 	}
 	return (
-		<>
-			<Box
-				sx={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					width: '100%',
-					height: '100vh',
-				}}
-			>
-				<Paper
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						position: 'relative',
-						gap: '20px',
-						padding: '25px 0px 45px',
-						margin: '0 20px',
-						width: '400px',
-						inset: 0,
-					}}
-					elevation={4}
-				>
-					<Typography variant='h4'>Import excel template</Typography>
-					<Button
-						variant='contained'
-						color='secondary'
-						sx={{ marginTop: '15px', fontSize: '20px' }}
-					>
-						<label htmlFor={LOAD_TEMPLATE_ID}>Press to load</label>
-					</Button>
-					<input
-						id={LOAD_TEMPLATE_ID}
-						style={{
-							display: 'none',
-						}}
-						type='file'
-						onChange={loadHandler}
-						accept={ACCEPTED_FILES_EXTENSIONS}
-					/>
-					<Typography variant='body1' sx={{ color: 'red' }}>
-						{error}
-					</Typography>
-				</Paper>
-			</Box>
-		</>
+		<Centered sx={{ marginTop: '100px' }}>
+			<Card>
+				<Heading>{t('file-input.Import excel template')}</Heading>
+				<FileInput
+					name={'load template file'}
+					error={error}
+					onChange={loadHandler}
+					accept={ACCEPTED_FILES_EXTENSIONS}
+				/>
+			</Card>
+		</Centered>
 	)
 }

@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
-import '@/assets/styles/globals.css'
 import initTranslations from '../18n'
-import TranslationsProvider from '@/components/TranslationProvider'
+import TranslationsProvider from '@/providers/translation-provider'
 import { dir } from 'i18next'
-import { ThemeProvider } from '@mui/material'
-import { theme } from '@/config/theme'
+
 import { AppProvider } from '@/providers'
+import { Header } from '@/features/layout'
 
 const i18nNameSpaces = ['common']
 
@@ -23,7 +21,6 @@ export default async function RootLayout({
 	params: { locale: string }
 }) {
 	const { resources } = await initTranslations(locale, i18nNameSpaces)
-
 	return (
 		<html lang={locale} dir={dir(locale)}>
 			<body>
@@ -33,6 +30,7 @@ export default async function RootLayout({
 						locale={locale}
 						namespaces={i18nNameSpaces}
 					>
+						<Header />
 						{children}
 					</TranslationsProvider>
 				</AppProvider>

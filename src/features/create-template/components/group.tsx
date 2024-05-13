@@ -1,9 +1,19 @@
 import { IField, IGroup } from '@/shared/types'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { InputGroup } from './group-input'
-import { Box, Button, Paper, Stack, TextField, Typography } from '@mui/material'
+import { Box, Button, Stack, TextField, Typography } from '@mui/material'
 import { v4 as uuid } from 'uuid'
 import { TypeCreateTemplateState } from '..'
+import {
+	Accordion,
+	Card,
+	Container,
+	Heading,
+	PrimaryButton,
+	PrimaryInput,
+	TextError,
+} from '@/shared/ui'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
 	setCurrentState: Dispatch<SetStateAction<TypeCreateTemplateState>>
@@ -22,18 +32,22 @@ export const TemplateGroup = ({
 	const [groupTitle, setGroupTitle] = useState('')
 	const [groupParentField, setGroupParentField] = useState('')
 
-	const addGroupHandler = (withDb: boolean) => {
-		setError('')
+	const { t } = useTranslation()
 
+	const addGroupHandler = (withDb: boolean) => {
 		if (!groupParentField || !groupTitle) {
-			setError('All fields are required')
+			setError(t('group.All fields are required'))
 			return
 		}
 
 		if (groups.some((g) => g.title === groupTitle)) {
-			setError('Group title is already used')
+			setError(t('group.Group title is already used'))
 			return
 		}
+
+		setError('')
+		setGroupTitle('')
+		setGroupParentField('')
 
 		setGroups((prev) => [
 			...prev,
@@ -50,7 +64,7 @@ export const TemplateGroup = ({
 	const saveGroupHandler = (fields: IField[], title: string) => {
 		for (let i = 0; i < fields.length; i++) {
 			if (!fields[i].value) {
-				alert('All fields should be filled in')
+				alert(t('group.All fields should be filled in'))
 				return
 			}
 		}
@@ -58,7 +72,7 @@ export const TemplateGroup = ({
 		const fieldsValues = fields.map((f) => f.value)
 
 		if (fieldsValues.length !== new Set(fieldsValues).size) {
-			alert('All fields should be unique')
+			alert(t('group.All fields should be unique'))
 			return
 		}
 		setGroups((groups) =>
@@ -85,13 +99,13 @@ export const TemplateGroup = ({
 	const nextStepHandler = () => {
 		setNextStepError('')
 		if (groups.length === 0) {
-			setNextStepError('You should have at least one group')
+			setNextStepError(t('group.You should have at least one group'))
 			return
 		}
 
 		for (let i = 0; i < groups.length; i++) {
 			if (!groups[i].isSaved) {
-				setNextStepError('Save all groups at first')
+				setNextStepError(t('group.Save all groups at first'))
 				return
 			}
 		}
@@ -99,100 +113,54 @@ export const TemplateGroup = ({
 	}
 
 	return (
-		<>
-			<Box
+		<Container>
+			<Card
+				fullWidth
 				sx={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					width: '100%',
-					marginTop: '40px',
+					marginTop: '50px',
 				}}
 			>
-				<Paper
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-						position: 'relative',
-						gap: '20px',
-						padding: '25px 0px 45px',
-						margin: '0 20px',
-						width: '1000px',
-						inset: 0,
-					}}
-					elevation={4}
-				>
-					<Stack spacing={2} width={'400px'} sx={{ paddingBottom: '50px' }}>
-						<Typography variant='body1' sx={{ color: 'red', fontSize: '18px' }}>
-							{nextStepError}
-						</Typography>
-						<Box
-							sx={{
-								display: 'flex',
-								justifyContent: 'space-between',
-							}}
+				<TextError text={nextStepError} />
+				<Accordion>
+					<PrimaryButton
+						sx={{ width: '120px' }}
+						onClick={() => setCurrentState('waiting for file')}
+					>
+						{t('Back')}
+					</PrimaryButton>
+					<PrimaryButton sx={{ width: '120px' }} onClick={nextStepHandler}>
+						{t('Next')}
+					</PrimaryButton>
+				</Accordion>
+				<Heading>{t('group.Data groups')}</Heading>
+				<Accordion gap={'20px'} row={false}>
+					<PrimaryInput
+						label={t('group.Group title')}
+						onChange={(e) => setGroupTitle(e.target.value)}
+						value={groupTitle}
+					/>
+					<PrimaryInput
+						label={t('group.Group parent')}
+						onChange={(e) => setGroupParentField(e.target.value)}
+						value={groupParentField}
+					/>
+					<TextError text={error} />
+					<Accordion sx={{ width: 'fit-content' }} gap='20px'>
+						<PrimaryButton
+							onClick={() => addGroupHandler(false)}
+							color='success'
 						>
-							<Button
-								variant='contained'
-								size='large'
-								onClick={() => setCurrentState('waiting for file')}
-								sx={{
-									width: '150px',
-								}}
-							>
-								Back
-							</Button>
-							<Button
-								variant='contained'
-								size='large'
-								onClick={nextStepHandler}
-								sx={{
-									width: '150px',
-								}}
-							>
-								next
-							</Button>
-						</Box>
-					</Stack>
-					<Typography variant='h4'>Data groups</Typography>
-					<Stack spacing={2} width={'400px'}>
-						<TextField
-							size='small'
-							sx={{ width: '400px' }}
-							label='Group title'
-							onChange={(e) => setGroupTitle(e.target.value)}
-							value={groupTitle}
-						/>
-						<TextField
-							size='small'
-							label='Group parent'
-							onChange={(e) => setGroupParentField(e.target.value)}
-							type='text'
-							value={groupParentField}
-						/>
-						<Typography variant='body1' sx={{ color: 'red' }}>
-							{error}
-						</Typography>
-						<Box
-							sx={{
-								display: 'flex',
-								justifyContent: 'space-between',
-							}}
+							{t('group.add group')}
+						</PrimaryButton>
+						<PrimaryButton
+							onClick={() => addGroupHandler(true)}
+							color='success'
 						>
-							<Button
-								variant='contained'
-								onClick={() => addGroupHandler(false)}
-							>
-								add group
-							</Button>
-							<Button variant='contained' onClick={() => addGroupHandler(true)}>
-								add group ( with database )
-							</Button>
-						</Box>
-					</Stack>
-				</Paper>
-			</Box>
+							{t('group.add group ( with database )')}
+						</PrimaryButton>
+					</Accordion>
+				</Accordion>
+			</Card>
 			{groups.map((group) => (
 				<InputGroup
 					saveGroupHandler={saveGroupHandler}
@@ -202,6 +170,6 @@ export const TemplateGroup = ({
 					deleteGroupHandler={() => deleteGroupHandler(group.title)}
 				/>
 			))}
-		</>
+		</Container>
 	)
 }

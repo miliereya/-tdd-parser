@@ -1,6 +1,8 @@
 'use client'
 
-import { Button, Typography } from '@mui/material'
+import { PrimaryButton, Text } from '@/shared/ui'
+import { Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
 	email: string
@@ -8,17 +10,19 @@ interface Props {
 }
 
 export const ConfirmationNotification = ({ backHandler, email }: Props) => {
+	const { t } = useTranslation()
+
 	return (
 		<>
-			<Typography variant='body1' textAlign={'center'}>
-				Check your email to confirm your account!
-			</Typography>
+			<Text>
+				{t(
+					'confirmation-notification.Check your email to confirm your account!'
+				)}
+			</Text>
 			<Typography variant='body1' fontWeight={700} textAlign={'center'}>
 				{email}
 			</Typography>
-			<Button onClick={backHandler} variant='contained' color='secondary'>
-				Go Back
-			</Button>
+			<PrimaryButton onClick={backHandler}>{t('Go Back')}</PrimaryButton>
 		</>
 	)
 }

@@ -4,3 +4,5 @@ export type TypeCreateTemplateState =
 	| 'loaded file'
 	| 'chaining cells'
 	| 'titling template'
+
+export type TypeCellInput = 'operation' | 'input' | null

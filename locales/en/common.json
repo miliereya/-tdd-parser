@@ -1,15 +1,99 @@
-{   "converter":"Converter",
-    "nav":{
-        "cars":"Cars",
-        "trailers":"Trailers",
-        "drivers":"Drivers",
-        "customers":"Clients",
-        "carriers":"Carriers",
-        "consignors":"Shippers",
-        "consignees":"Consignees"
-
-
-    }
+{
+	"converter": "Converter",
+	"Unexpected error": "Unexpected error",
+	"Go Back": "Go Back",
+	"Back": "Back",
+	"Press to load": "Press to load",
+	"Next": "Next",
+	"Save": "Save",
+	"save": "Save",
+	"Edit": "Edit",
+	"Add": "Add",
+	"Delete": "Delete",
+	"nav": {
+		"create-template": "Create Template",
+		"templates": "Templates",
+		"databases": "Database",
+		"logout": "Logout",
+		"sign": "Sign in / up"
+	},
+	"credentials": {
+		"Sign to your Account": "Sign to your Account",
+		"Register": "Register",
+		"Login": "Login",
+		"Wrong email address": "Wrong email address",
+		"Invalid email format": "Invalid email format",
+		"Email is already used": "Email is already used"
+	},
+	"code-confirmation": {
+		"A verification code has been sent to your email!": "A verification code has been sent to your email!",
+		"Email": "Email",
+		"Enter your code here": "Enter your code here",
+		"Success! You will be redirected in a second": "Success! You will be redirected in a second",
+		"Wrong code": "Wrong code",
+		"Code is expired. Try again": "Code is expired. Try again"
+	},
+	"confirmation-notification": {
+		"Check your email to confirm your account!": "Check your email to confirm your account!"
+	},
+	"email-confirmation": {
+		"Success! You will be redirected in a second!": "Success! You will be redirected in a second!",
+		"Something went wrong...": "Something went wrong..."
+	},
+	"file-input": {
+		"Import excel template": "Import excel template",
+		"Empty template error": "Empty template error",
+		"Wrong filled template": "Wrong filled template"
+	},
+	"group": {
+		"Group title is already used": "Group title is already used",
+		"All fields should be filled in": "All fields should be filled in",
+		"All fields are required": "All fields are required",
+		"All fields should be unique": "All fields should be unique",
+		"You should have at least one group": "You should have at least one group",
+		"Save all groups at first": "Save all groups at first",
+		"Data groups": "Data groups",
+		"Group title": "Group title",
+		"Group parent": "Group parent",
+		"add group": "add group",
+		"add group ( with database )": "add group ( with database )"
+	},
+	"group-input": {
+		"Parent field": "Parent field",
+		"+ Input (small)": "+ Input (small)",
+		"+ Input (large)": "+ Input (large)"
+	},
+	"cell-chain": {
+		"Chain Cells": "Chain Cells",
+		"Save all cells to continue": "Save all cells to continue"
+	},
+	"cell": {
+		"Save new field at first": "Save new field at first",
+		"Cell can't be empty": "Cell can't be empty",
+		"+ input": "+ input",
+		"+ operation": "+ operation"
+	},
+	"cell-select": {
+		"Text": "Text",
+		"Don&#39;t add value": "Don&#39;t add value",
+		"All cells must be filled": "All cells must be filled"
+	},
+	"title-template": {
+		"Please enter a title": "Please enter a title",
+		"Title is already used": "Title is already used",
+		"Something went wrong...": "Something went wrong...",
+		"Enter a title for your template": "Enter a title for your template",
+		"Save template": "Save template"
+	},
+	"templates-list": {
+		"Error deleting template": "Error deleting template",
+		"Search by Title": "Search by Title",
+		"You have no templates yet": "You have no templates yet"
+	},
+	"template": {
+		"Template loaded successfully!": "Template loaded successfully!",
+		"Loading template...": "Loading template...",
+		"Clear fields after upload?": "Clear fields after upload?",
+		"Convert Template": "Convert Template"
+	}
 }
-
-
