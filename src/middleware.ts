@@ -5,6 +5,7 @@ import { getAuthToken, getPath } from './shared/lib'
 import { PROTECTED_ROUTES } from './shared/constants'
 
 export async function middleware(request: NextRequest) {
+	console.log(request.nextUrl.pathname)
 	if (
 		!(await getAuthToken()) &&
 		PROTECTED_ROUTES.includes(getPath(request.nextUrl.pathname))

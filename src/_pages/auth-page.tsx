@@ -9,7 +9,7 @@ export default function AuthPage() {
 
 	const { push } = useRouter()
 
-	if (user) push('/main')
+	if (user) push('/templates')
 
 	return (
 		<>
