@@ -3,7 +3,7 @@ import { Row } from 'exceljs'
 
 export const fillCells = (rows: Row, cells: ICell[]) => {
 	rows.eachCell((c) => {
-		if (!c.value?.toString().startsWith('CELL_2')) return
+		if (!c.value?.toString().startsWith('CELL_')) return
 
 		const val = cells.find(({ index }) => index === c.value)
 		const values = val?.values
