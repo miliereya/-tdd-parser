@@ -10,7 +10,14 @@ const i18nNameSpaces = ['common']
 
 export const metadata: Metadata = {
 	title: 'Excel-Parser',
-	description: 'miralis.io',
+	icons: {
+		icon: [
+			{
+				url: '/next.ico',
+				href: '/next.ico',
+			},
+		],
+	},
 }
 
 export default async function RootLayout({
@@ -21,8 +28,12 @@ export default async function RootLayout({
 	params: { locale: string }
 }) {
 	const { resources } = await initTranslations(locale, i18nNameSpaces)
+
 	return (
 		<html lang={locale} dir={dir(locale)}>
+			<head>
+				<link rel='icon' href='/favicon.ico' sizes='any' />
+			</head>
 			<body>
 				<AppProvider>
 					<TranslationsProvider
