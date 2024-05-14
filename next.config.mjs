@@ -14,6 +14,15 @@ const nextConfig = {
 			},
 		]
 	},
+	async redirects() {
+		return [
+			{
+				source: '/',
+				destination: '/templates',
+				permanent: true,
+			},
+		]
+	},
 }
 
 export default nextConfig
