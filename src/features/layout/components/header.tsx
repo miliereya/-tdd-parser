@@ -6,11 +6,17 @@ import { Card, Centered, Container, Heading, Text } from '@/shared/ui'
 import { Box, Button } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useCurrentLocale } from 'next-i18n-router/client'
+import i18nConfig from '../../../../i18nConfig'
 
 export const Header = () => {
+	const router = useRouter()
+	const currentPathname = usePathname()
+	const currentLocale = useCurrentLocale(i18nConfig)
+
 	const { user, setUser, isLoading } = useGlobalContext()
 	const { t, i18n } = useTranslation()
 	const { push } = useRouter()
@@ -23,9 +29,23 @@ export const Header = () => {
 		setUser(null)
 	}
 
-	const changeLanguageHandler = (language: string) => {
-		i18n.changeLanguage(language)
-		localStorage.setItem('language', language)
+	const changeLanguageHandler = (newLocale: string) => {
+		const days = 30
+		const date = new Date()
+		date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+		const expires = '; expires=' + date.toUTCString()
+		document.cookie = `NEXT_LOCALE=${newLocale};expires=${expires};path=/`
+
+		if (
+			currentLocale === i18nConfig.defaultLocale &&
+			!i18nConfig.prefixDefault
+		) {
+			router.push('/' + newLocale + currentPathname)
+		} else {
+			router.push(currentPathname.replace(`/${currentLocale}`, `/${newLocale}`))
+		}
+
+		router.refresh()
 	}
 
 	return (
